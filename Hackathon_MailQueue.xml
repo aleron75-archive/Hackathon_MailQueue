@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Hackathon_MailQueue>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Lilmuckers_Queue/>
+            </depends>
+        </Hackathon_MailQueue>
+    </modules>
+</config>

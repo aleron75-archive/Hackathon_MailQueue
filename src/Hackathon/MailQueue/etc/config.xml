@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Hackathon_MailQueue>
+            <version>1.0.0</version>
+        </Hackathon_MailQueue>
+    </modules>
+    <global>
+        <models>
+            <hmq>
+                <class>Hackathon_MailQueue_Model</class>
+                <resourceModel>hmq_resource</resourceModel>
+            </hmq>
+            <hmq_resource>
+                <class>Hackathon_MailQueue_Model_Resource</class>
+            </hmq_resource>
+        </models>
+        <blocks>
+            <hmq>
+                <class>Hackathon_MailQueue_Block</class>
+            </hmq>
+        </blocks>
+        <helpers>
+            <hmq>
+                <class>Hackathon_MailQueue_Helper</class>
+            </hmq>
+        </helpers>
+        <resources>
+            <hmq_setup>
+                <setup>
+                    <module>Hackathon_MailQueue</module>
+                </setup>
+            </hmq_setup>
+        </resources>
+    </global>
+
+    <queues>
+        <email_queue>
+            <label>Email Queue</label>
+            <class>hmq/queueHandler</class>
+            <workers>
+                <sendEmail>
+                    <class>hmq/worker_emailSender</class>
+                    <method>sendEmail</method>
+                </sendEmail>
+
+                <sendOrderUpdateEmail>
+                    <class>hmq/worker_emailSender</class>
+                    <method>sendOrderUpdateEmail</method>
+                </sendOrderUpdateEmail>
+            </workers>
+        </email_queue>
+    </queues>
+
+</config>
