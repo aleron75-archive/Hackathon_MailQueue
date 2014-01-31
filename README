@@ -1,0 +1,11 @@
+Usage example:
+
+$_queue = Mage::helper('lilqueue')->getQueue('email_queue');
+
+$_task = Mage::helper('lilqueue')->createTask(
+    'sendOrderUpdateEmail',
+    array('order_id'=>'1'),
+    Mage::app()->getStore()
+);
+
+$_queue->addTask($_task);
