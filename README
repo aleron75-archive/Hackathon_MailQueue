@@ -1,8 +1,3 @@
-TO DO 
-
-* CC
-* BCC
-
 Usage example:
 
 $_queue = Mage::helper('lilqueue')->getQueue('email_queue');

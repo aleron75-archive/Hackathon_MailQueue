@@ -13,11 +13,34 @@ class Hackathon_MailQueue_Model_Mail extends Zend_Mail
     protected $_myBodyHtml = false;
     protected $_myBodyText = false;
 
+    public function __construct($charset = null)
+    {
+        $this->_myRecipients['to'] = array();
+        $this->_myRecipients['cc'] = array();
+        $this->_myRecipients['bcc'] = array();
+        parent::__construct($charset);
+    }
+
+
     public function addTo($email, $name = '')
     {
-        $this->_myRecipients[$email] = $name;
+        $this->_myRecipients['to'][$email] = $name;
 
         return parent::addTo($email, $name);
+    }
+
+    public function addCc($email, $name = '')
+    {
+        $this->_myRecipients['cc'][$email] = $name;
+
+        return parent::addCc($email, $name);
+    }
+
+    public function addBcc($email)
+    {
+        $this->_myRecipients['bcc'][] = $email;
+
+        return parent::addBcc($email);
     }
 
     public function setBodyHtml(
@@ -54,14 +77,14 @@ class Hackathon_MailQueue_Model_Mail extends Zend_Mail
         $queue = Mage::helper('lilqueue')->getQueue('email_queue');
 
         $data = array(
-            'date'      => $this->getDate(),
-            'from'      => $this->getFrom(),
-            'to'        => $this->_myRecipients,
-            'reply_to'  => $this->getReplyTo(),
-            'subject'   => $this->getSubject(),
-            'body_text' => $this->_myBodyText,
-            'body_html' => $this->_myBodyHtml,
-            'transport' => $transport,
+            'date'          => $this->getDate(),
+            'from'          => $this->getFrom(),
+            'recipients'    => $this->_myRecipients,
+            'reply_to'      => $this->getReplyTo(),
+            'subject'       => $this->getSubject(),
+            'body_text'     => $this->_myBodyText,
+            'body_html'     => $this->_myBodyHtml,
+            'transport'     => $transport,
         );
 
         $task = Mage::helper('lilqueue')->createTask(

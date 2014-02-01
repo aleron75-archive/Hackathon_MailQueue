@@ -1,6 +1,21 @@
 <?php
 class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Model_Worker_Abstract
 {
+    /**
+     * This task ended properly
+     * $task->success();
+     *
+     * This task needs to be repeated
+     * $task->retry();
+     *
+     * This task errored and we should drop it from the queue for later examination
+     * $task->hold();
+     *
+     * This worker is taking a long time, we should extend the time we're allowed to use it
+     * $task->touch();
+     *
+     * @param Lilmuckers_Queue_Model_Queue_Task $task
+     */
     public function sendEmail(Lilmuckers_Queue_Model_Queue_Task $task)
     {
         Mage::log('task data: ' . print_r($task->getData(), true), null, 'email_queue.log', true);
@@ -9,8 +24,29 @@ class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Mode
 
         $mail->setDate($task->getDate());
         $mail->setFrom($task->getFrom());
-        foreach ($task->getTo() as $email => $name) {
-            $mail->addTo($email, $name);
+
+        foreach ($task->getRecipients() as $type => $recipients) {
+            switch ($type) {
+                case 'cc':
+                    foreach ($recipients as $email => $name) {
+                        $mail->addCc($email, $name);
+                    }
+                    break;
+
+                case 'bcc':
+                    foreach ($recipients as $email) {
+                        $mail->addBcc($email);
+                    }
+                    break;
+
+                case 'to':
+                    // break intentionally omitted
+                default:
+                    foreach ($recipients as $email => $name) {
+                        $mail->addTo($email, $name);
+                    }
+                    break;
+            }
         }
         $mail->setReplyTo($task->getReplyTo());
         $mail->setSubject($task->getSubject());
@@ -27,39 +63,6 @@ class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Mode
             $task->hold();
             Mage::log('Exception: ' . $e->getMessage(), null, 'email_queue.log', true);
             Mage::log('sendEmail deferred', null, 'email_queue.log', true);
-        }
-
-        //This task ended properly
-        //$task->success();
-
-        //this task needs to be repeated
-        //$task->retry();
-
-        //this task errored and we should drop it from the queue for later examination
-        //$task->hold();
-
-        //this worker is taking a long time, we should extend the time we're allowed to use it
-        //$task->touch();
-    }
-
-    public function sendOrderUpdateEmail(Lilmuckers_Queue_Model_Queue_Task $task)
-    {
-        $orderId = $task->getOrderId();
-        /** @var Mage_Sales_Model_Order $order */
-        $order = Mage::getModel('sales/order')->load($orderId);
-        if (! $order->getId()) {
-            $task->hold();
-            return;
-        }
-
-        try {
-            $order->sendOrderUpdateEmail(true, 'This was sent from a wonderful queue engine!');
-            Mage::log('sendOrderUpdateEmail executed', null, 'email_queue.log', true);
-            $task->success();
-            return;
-        } catch (Exception $e) {
-            Mage::log('sendOrderUpdateEmail delayed', null, 'email_queue.log', true);
-            $task->retry();
         }
     }
 }

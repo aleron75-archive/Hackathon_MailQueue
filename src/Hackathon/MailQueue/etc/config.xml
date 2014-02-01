@@ -49,11 +49,6 @@
                     <class>hmq/worker_emailSender</class>
                     <method>sendEmail</method>
                 </sendEmail>
-
-                <sendOrderUpdateEmail>
-                    <class>hmq/worker_emailSender</class>
-                    <method>sendOrderUpdateEmail</method>
-                </sendOrderUpdateEmail>
             </workers>
         </email_queue>
     </queues>
