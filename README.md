@@ -3,7 +3,7 @@ Hackathon MailQueue
 
 Introduction
 ------------
-This module has been conceived during the Magento Hackathon Day on February 1st, 2014.
+This module has been conceived during the **Magento Hackathon Day** (31st Jan - 1st Feb). Read more on the Hackathon site: http://www.mage-hackathon.de/upcoming/online-hackathon-worldwide-31st-jan-1st-feb.html
 
 The module depends on the Lilmuckers_Queue extension, a generic multi-adapter queuing system for Magento.
 
