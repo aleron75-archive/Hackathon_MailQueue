@@ -53,4 +53,12 @@
         </email_queue>
     </queues>
 
+    <default>
+        <system>
+            <hmq>
+                <retry_timeout>30</retry_timeout>
+            </hmq>
+        </system>
+    </default>
+
 </config>

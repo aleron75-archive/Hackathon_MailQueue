@@ -41,6 +41,14 @@ Usage
 -----
 Once enabled, the extensions works under the hood; it rewrites the ```Mage_Core_Email_Template``` and overrides the ```getMail()``` method in order to use a specialized version of ```Zend_Mail``` class which does the magic of deferring emails to a queue.
 
+COMPATIBILITY
+-------------
+Here follows the list of versions the module has been tested on:
+
+* Magento CS v 1.8.0.0
+
+Note: if a version different from the ones listed above doesn't compare, it doesn't necessarily mean that the module won't work on that. If you try the module on different version and it works, please notify the author in order to update the compatibility list. It will be appreciated.
+
 RELEASE NOTES
 -------------
 * 1.0.0 - the first implementation
