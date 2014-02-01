@@ -14,6 +14,12 @@
             <hmq_resource>
                 <class>Hackathon_MailQueue_Model_Resource</class>
             </hmq_resource>
+            Mage_Core_Model_Email_Template
+            <core>
+                <rewrite>
+                    <email_template>Hackathon_MailQueue_Model_EmailTemplate</email_template>
+                </rewrite>
+            </core>
         </models>
         <blocks>
             <hmq>

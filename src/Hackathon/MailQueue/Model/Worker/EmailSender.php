@@ -3,19 +3,34 @@ class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Mode
 {
     public function sendEmail(Lilmuckers_Queue_Model_Queue_Task $task)
     {
-        //get the store assigned with the task (defaults to the store that was running when the task was assigned)
-        $store = $task->getStore();
+        Mage::log('task data: ' . print_r($task->getData(), true), null, 'email_queue.log', true);
 
-        //get the queue handler for this queue
-        $queue = $task->getQueue();
+        $mail = new Zend_Mail('utf-8');
 
-        //get the data assigned with the task
-        $data = $task->getData();  // $task->getSpecificData();
+        $mail->setDate($task->getDate());
+        $mail->setFrom($task->getFrom());
+        foreach ($task->getTo() as $email => $name) {
+            $mail->addTo($email, $name);
+        }
+        $mail->setReplyTo($task->getReplyTo());
+        $mail->setSubject($task->getSubject());
+        if ($task->getBodyText()) $mail->setBodyText($task->getBodyText());
+        if ($task->getBodyHtml()) $mail->setBodyHtml($task->getBodyHtml());
 
-        Mage::log('sendEmail executed', null, 'email_queue.log', true);
+        $transport = $task->getTransport();
+
+        try {
+            $mail->send($transport);
+            $task->success();
+            Mage::log('sendEmail executed', null, 'email_queue.log', true);
+        } catch (Exception $e) {
+            $task->hold();
+            Mage::log('Exception: ' . $e->getMessage(), null, 'email_queue.log', true);
+            Mage::log('sendEmail deferred', null, 'email_queue.log', true);
+        }
 
         //This task ended properly
-        $task->success();
+        //$task->success();
 
         //this task needs to be repeated
         //$task->retry();
