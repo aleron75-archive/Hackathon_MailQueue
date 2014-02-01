@@ -33,9 +33,13 @@ $ modman init
 $ modman clone git@github.com:aleron75/Hackathon_MailQueue.git
 ```
 
+Configuration
+-------------
+You can enable the functionality of sending emails through a Queue Backend under ```System > Configuration > ADVANCED > System > Mail Queue Settings```.
+
 Usage
 -----
-The extensions works under the hood; it rewrites the ```Mage_Core_Email_Template``` and overrides the ```getMail()``` method in order to use a specialized version of ```Zend_Mail``` class which does the magic of deferring emails to a queue.
+Once enabled, the extensions works under the hood; it rewrites the ```Mage_Core_Email_Template``` and overrides the ```getMail()``` method in order to use a specialized version of ```Zend_Mail``` class which does the magic of deferring emails to a queue.
 
 RELEASE NOTES
 -------------

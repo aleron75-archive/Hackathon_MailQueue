@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<sections>
+		<!-- payment tab -->
+		<system>
+			<groups>
+				<!-- bancasellagw fieldset -->
+				<hmq translate="label">
+					<!-- will have title 'New Module' -->
+					<label>Mail Queue Settings</label>
+					
+					<!-- position between other payment methods -->
+					<sort_order>22</sort_order>
+					
+					<!-- do not show this configuration options in store scope -->
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+                        <enabled translate="label,comment">
+                            <label><![CDATA[Send e-mails through a Queue Backend]]></label>
+                            <comment><![CDATA[If you activate this option, be sure a <strong>Queue Backend</strong> is properly <strong>configured</strong> in your app/etc/local.xml<br/>For more information about supported Queue Backends, see <a href="https://github.com/lilmuckers/magento-lilmuckers_queue">Lilmuckers_Queue</a> Project Page.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+					</fields>
+				</hmq>
+			</groups>
+		</system>
+	</sections>
+</config>
