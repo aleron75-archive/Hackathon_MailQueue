@@ -18,7 +18,8 @@ class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Mode
      */
     public function sendEmail(Lilmuckers_Queue_Model_Queue_Task $task)
     {
-        Mage::log('task data: ' . print_r($task->getData(), true), null, 'email_queue.log', true);
+        #Mage::log('task data: ' . print_r($task->getData(), true), null, 'email_queue.log', true);
+        #Mage::log('task info: ' . print_r($task->getInfo(), true), null, 'email_queue.log', true);
 
         $mail = new Zend_Mail('utf-8');
 
@@ -60,9 +61,14 @@ class Hackathon_MailQueue_Model_Worker_EmailSender extends Lilmuckers_Queue_Mode
             $task->success();
             Mage::log('sendEmail executed', null, 'email_queue.log', true);
         } catch (Exception $e) {
-            $task->hold();
-            Mage::log('Exception: ' . $e->getMessage(), null, 'email_queue.log', true);
-            Mage::log('sendEmail deferred', null, 'email_queue.log', true);
+            $taskInfo = $task->getInfo();
+            if ($taskInfo->getAge() < 30) {
+                $task->retry();
+                Mage::log('sendEmail new attempt', null, 'email_queue.log', true);
+            } else {
+                $task->hold();
+                Mage::log('sendEmail aborted: ' . $e->getMessage(), null, 'email_queue.log', true);
+            }
         }
     }
 }

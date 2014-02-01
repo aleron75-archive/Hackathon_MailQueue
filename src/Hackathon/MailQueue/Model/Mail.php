@@ -9,8 +9,19 @@
 
 class Hackathon_MailQueue_Model_Mail extends Zend_Mail
 {
+    /**
+     * @var array Used to keep different recipient separately
+     */
     protected $_myRecipients = array();
+
+    /**
+     * @var false|string Used to keep original HTML Body
+     */
     protected $_myBodyHtml = false;
+
+    /**
+     * @var false|string Used to keep original TEXT Body
+     */
     protected $_myBodyText = false;
 
     public function __construct($charset = null)
@@ -71,7 +82,12 @@ class Hackathon_MailQueue_Model_Mail extends Zend_Mail
         );
     }
 
-
+    /**
+     * Assign the task of sending the email to the Queue.
+     *
+     * @param Zend_Mail_Transport_Abstract $transport
+     * @return $this|Zend_Mail
+     */
     public function send($transport = null)
     {
         $queue = Mage::helper('lilqueue')->getQueue('email_queue');
@@ -87,12 +103,7 @@ class Hackathon_MailQueue_Model_Mail extends Zend_Mail
             'transport'     => $transport,
         );
 
-        $task = Mage::helper('lilqueue')->createTask(
-            'sendEmail',
-            $data,
-            Mage::app()->getStore()
-        );
-
+        $task = Mage::helper('lilqueue')->createTask('sendEmail', $data);
         $queue->addTask($task);
 
         return $this;
