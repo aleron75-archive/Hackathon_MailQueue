@@ -37,6 +37,8 @@ Configuration
 -------------
 You can enable the functionality of sending emails through a Queue Backend under ```System > Configuration > ADVANCED > System > Mail Queue Settings```.
 
+![alt tag](https://raw.github.com/aleron75/Hackathon_MailQueue/master/doc/Hackathon-MailQueue-SystemConfig.png)
+
 Usage
 -----
 Once enabled, the extensions works under the hood; it rewrites the ```Mage_Core_Email_Template``` and overrides the ```getMail()``` method in order to use a specialized version of ```Zend_Mail``` class which does the magic of deferring emails to a queue.
