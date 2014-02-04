@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<sections>
-		<!-- payment tab -->
 		<system>
 			<groups>
-				<!-- bancasellagw fieldset -->
 				<hmq translate="label">
-					<!-- will have title 'New Module' -->
 					<label>Mail Queue Settings</label>
 					
-					<!-- position between other payment methods -->
 					<sort_order>22</sort_order>
 					
-					<!-- do not show this configuration options in store scope -->
 					<show_in_default>1</show_in_default>
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
