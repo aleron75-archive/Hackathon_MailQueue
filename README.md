@@ -54,3 +54,7 @@ Note: if a version different from the ones listed above doesn't compare, it does
 RELEASE NOTES
 -------------
 * 1.0.0 - the first implementation
+
+LICENSE
+-------
+This software is released under Open Source License 3.0; read more on: http://opensource.org/licenses/OSL-3.0
