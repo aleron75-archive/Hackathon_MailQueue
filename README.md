@@ -1,6 +1,8 @@
 Hackathon MailQueue
 ===================
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Introduction
 ------------
 This module has been conceived during the **Magento Hackathon 2014** (31st Jan - 1st Feb). Read more on the Hackathon site: http://www.mage-hackathon.de/upcoming/online-hackathon-worldwide-31st-jan-1st-feb.html
